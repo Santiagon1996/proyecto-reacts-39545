@@ -1,0 +1,34 @@
+[
+    {
+        "id": 0,
+        "name": "preoducto1",
+        "description": " descripcion preoducto1",
+        "stock": 10,
+        "price": 100,
+        "category": "Vinos"
+    },
+    {
+        "id": 1,
+        "name": "preoducto2",
+        "description": " descripcion preoducto2",
+        "stock": 30,
+        "price": 200,
+        "category": "Destilados"
+    },
+    {
+        "id": 2,
+        "name": "preoducto3",
+        "description": " descripcion preoducto3",
+        "stock": 40,
+        "price": 300,
+        "category": "Champagne"
+    },
+    {
+        "id": 3,
+        "name": "preoducto4",
+        "description": " descripcion preoducto4",
+        "stock": 50,
+        "price": 400,
+        "category": "Aperitivos"
+    }
+]
