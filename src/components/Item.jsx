@@ -1,45 +1,67 @@
-import React from 'react'
-import { Card, CardHeader, CardBody, CardFooter, Stack, Heading, Text, Divider, ButtonGroup, Button, Image, Center } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { useState, useEffect } from "react";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import ItemQuantitySelector from "./ItemQuantitySelector";
+import {
+  Card,
+  CardBody,
+  Image,
+  Stack,
+  Heading,
+  Text,
+  Divider,
+  CardFooter,
+  ButtonGroup,
+  Spacer,
+  Flex,
+} from "@chakra-ui/react";
 
+// Componente Description
+const Item = () => {
+  const [products, setProducts] = useState([]);
 
-const Item = ({ id, name, price, category }) => {
-    return (
-        <div>
-            <div key={id} >
-                <Center p="1rem">
-                    <Card maxW='sm'className='card-main' >
-                        <CardBody>
-                            <Image
-                                 src= "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Bouteille.jpg/200px-Bouteille.jpg"
-                                alt='Botella'
-                                borderRadius='lg'
-                            />
-                            <Stack mt='6' spacing='3'>
-                                <Heading size='md'>{name}</Heading>
-                                <Text color="black" fontSize="1">
-                                    Category: {category}
-                                </Text>
-                                <Text color='blue.600' fontSize='2xl'>
-                                    Price: {price}
-                                </Text>
-                            </Stack>
-                        </CardBody>
-                        <Divider />
-                        <CardFooter className='card-footer'>
-                            <Center className='btn-center'>
-                    
-                                    <Button variant='solid' colorScheme='blue'>
-                                        <Link to={`/item/${id}`}>Detalle</Link>
-                                    </Button>
-                                
-                            </Center>
-                        </CardFooter>
-                    </Card>
-                </Center>
-            </div>
-        </div>
-    )
-}
+  useEffect(() => {
+    const db = getFirestore();
 
-export default Item
+    const itemsCollection = collection(db, "bebidas");
+    getDocs(itemsCollection).then((snapshot) => {
+      setProducts(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+    });
+  }, []);
+
+  return (
+    <>
+      {products.map((item) => (
+        <Card maxW="sm" key={item.id} m={5} >
+          <CardBody>
+            <Image
+              src={item.image}
+              alt={`Imagen del prodcuto ${item.name} `}
+              borderRadius="lg"
+              className="itemImage"
+            />
+            <Stack mt="6" spacing="3">
+              <Heading size="md">{item.name}</Heading>
+              <Text className="textCardItem">{item.description}</Text>
+              <Text color="blue.600" fontSize="2xl">
+                ${item.price}
+              </Text>
+            </Stack>
+          </CardBody>
+          <Divider />
+          <CardFooter>
+            <Flex w="100%" spacing={4} direction="row" align="center">
+              <Spacer />
+              <ButtonGroup spacing="2">
+                <ItemQuantitySelector />
+              </ButtonGroup>
+              <Spacer />
+            </Flex>
+          </CardFooter>
+        </Card>
+      ))}
+    </>
+  );
+};
+
+export default Item;

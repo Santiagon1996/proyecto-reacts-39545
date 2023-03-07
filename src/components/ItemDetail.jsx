@@ -1,52 +1,87 @@
-import { CardBody, Center,Card, Image, Stack,Heading,Text,Button,CardFooter,Divider,} from "@chakra-ui/react";
- // import botella from "../assets/botella1.jpg";
-  import { useParams } from "react-router-dom";
-  import ItemCount from "./ItemCount";
-  
-  const ItemDetail = ({productos}) => {
-    const { id } = useParams();
-  
-    const productoFilter = productos.filter((producto) => producto.id == id);
-    return (
-      <>
-        {productoFilter.map((producto) => (
-          <div key={producto.id}>
-            <Center p="1rem">
-              <Card className="card-main">
-                <CardBody>
-                  <Image borderRadius="lg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Bouteille.jpg/200px-Bouteille.jpg" />
-                  <Stack mt="6" spacing="3">
-                    <Heading size="md">{producto.name}</Heading>
-                    <Text color="blue.800" fontSize="l">
-                      Description: {producto.description}
-                    </Text>
-                    <Text color="blue.800" fontSize="l">
-                      Category: {producto.category}
-                    </Text>
-                    <Text color="red.600" fontSize="xl">
-                      Stock: {producto.stock}
-                    </Text>
-                    <Text color="green.600" fontSize="xl">
-                      Price: U$D {producto.price}
-                    </Text>
-                  </Stack>
-                </CardBody>
-                <Divider />
-                <CardFooter className="card-footer">
-                  <ItemCount />
-                  <Center className="btn-center">
-                    <Button variant="solid" colorScheme="blue">
-                      Buy
-                    </Button>
-                  </Center>
-                </CardFooter>
-              </Card>
+import React, { useContext } from "react";
+import { CounterContext } from "../context/CounterContext";
+import { Link } from "react-router-dom";
+import ItemQuantitySelector from "./ItemQuantitySelector";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Image,
+  Stack,
+  Heading,
+  Text,
+  Divider,
+  ButtonGroup,
+  Button,
+  Center,
+  Flex,
+  Box,
+  Spacer,
+} from "@chakra-ui/react";
+
+const ItemDetail = ({ product }) => {
+  const { counter, setCounter, cart, setCart, cartItems } =
+    useContext(CounterContext);
+  return (
+    <>
+      <Center mt={10}>
+        <Card maxW="sm" className="card">
+          <CardBody>
+            <Center>
+              <Image
+                src={product.image}
+                alt={`Imagen del producto ${product.name} `}
+                borderRadius="lg"
+                className="itemImage"
+              />
             </Center>
-          </div>
-        ))}
-      </>
-    );
-  };
-  
-  export default ItemDetail;
- 
+            <Stack mt="6" spacing="5">
+              <Heading size="md">{product.name}</Heading>
+              <Text>{product.description}</Text>
+              <Flex>
+                <Box>
+                  <Text color="blue.600" fontSize="2xl">
+                    ${product.price}
+                  </Text>
+                </Box>
+                <Spacer />
+                <Box>
+                  <Text fontSize="2xl">Stock: {product.stock}</Text>
+                </Box>
+              </Flex>
+            </Stack>
+          </CardBody>
+          <Divider />
+          <CardFooter>
+            <ButtonGroup spacing="12">
+              <ItemQuantitySelector stock={product.stock} />
+              <Button
+                onClick={() => {
+                  setCart(cart + counter);
+                  setCounter(0);
+                  if (counter != 0) {
+                    cartItems.push([product.name, product.price, counter]);
+                  } else {
+                    alert("Debe indicar la cantidad");
+                  }
+                }}
+                colorScheme="teal"
+              >
+                Agregar al carrito
+              </Button>
+            </ButtonGroup>
+          </CardFooter>
+          <Button
+            onClick={() => setCounter(0)}
+            variant="ghost"
+            colorScheme="teal"
+          >
+            <Link to={"/catalogue"}>Volver</Link>
+          </Button>
+        </Card>
+      </Center>
+    </>
+  );
+};
+
+export default ItemDetail;

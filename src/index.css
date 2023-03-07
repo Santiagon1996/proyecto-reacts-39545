@@ -60,3 +60,110 @@
   height: 100%;
   margin: 10rem;
 }
+.cart{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 50%;
+}
+
+.menu-list{
+  font-size: larger;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  
+}
+.card{
+  border: black 5px solid;
+}
+.main-catalogue{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5rem;
+  flex-wrap: wrap;
+  object-fit: contain;
+  
+}
+
+
+.card-main{
+  width: 18rem;
+  margin: 1rem;
+}
+
+.welcome-container{
+  padding: 10rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.btn-send{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  margin: 1rem;
+}
+
+.cart-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 10rem;
+}
+
+
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+.flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+
+.full-width {
+  width: 100vw;
+}
+
+.list-decoration{
+  list-style: none;
+  color: white;
+}
+
+.ItemListContainer{
+  min-height: 90vh;
+ 
+}
+
+.personal-width{
+  width: 70vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.itemImage{
+  width: 300px;
+  height: 300px;
+}
+
+.textCardItem {
+  min-height: 120px;
+}

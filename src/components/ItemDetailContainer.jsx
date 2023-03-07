@@ -1,36 +1,27 @@
-import ItemDetail from "./ItemDetail"
-import { useState } from "react"
-import Product from "../product.json"
-import { useParams } from "react-router"
-
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import ItemDetail from "./ItemDetail";
 
 const ItemDetailContainer = () => {
-  const { id } = useParams()
-  const [productos, setProductos] = useState([])
-  const getDatos = () => {
-    return new Promise((resolve, reject) => {
-      if (Product.length === 0) {
-        reject(new Error("No hay datos"));
+  const [product, setProduct] = useState("");
+  const item = useParams();
+
+  useEffect(() => {
+    const db = getFirestore();
+    const bebidas = doc(db, "bebidas", `${item.id}`);
+    getDoc(bebidas).then((snapshot) => {
+      if (snapshot.exists()) {
+        setProduct({ id: snapshot.id, ...snapshot.data() });
       }
-      setTimeout(() => {
-        const productoFilter = Product.filter((producto) => producto.id == id);
-        resolve(productoFilter)
-      }, 2000)
-    })
-  }
+    });
+  }, []);
 
-
-  async function fetchingProduct() {
-    try {
-      const datosFetched = await getDatos();
-      setProductos(datosFetched)
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  fetchingProduct()
-  return <ItemDetail productos={Product} />
-}
+  return (
+    <>
+      <ItemDetail product={product} />
+    </>
+  );
+};
 
 export default ItemDetailContainer;

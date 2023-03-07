@@ -2,65 +2,36 @@ import CartWidget from "./CartWidget"
 import { Container, Flex, Spacer, Box, Heading, Center, Menu, MenuButton, MenuList, MenuItem, Avatar, Button } from '@chakra-ui/react'
 import { Link, NavLink } from "react-router-dom"
 import { ChevronDownIcon } from '@chakra-ui/icons'
+import { CounterContext } from "../context/CounterContext";
+import React, { useContext } from "react";
+
 const NavBar = () => {
+
+   const { cart } = useContext(CounterContext);
+
+   function CheckCarrito({ cantidadProductos }) {
+      if (cantidadProductos > 0) {
+         return (
+            <Link to={"/cart"}>
+               <CartWidget />
+            </Link>
+         );
+      } else {
+         return (
+            <button
+               onClick={() => alert("El carrito esta vacio, debe contener algun producto")}
+            >
+               <CartWidget />
+            </button>
+         );
+      }
+   }
+
    return (
       <>
-
-         {/* <Container minW="85rem " bg="purple" color='black' >
-             <Flex alignContent="center">
-                <Box>
-                   <Center h='100px'>
-                      <nav className="navbar navbar-expand-lg">
-                         <div className="container-fluid">
-                           <Heading><a className="navbar-brand" href="#">Vivino</a></Heading>
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                               <span className="navbar-toggler-icon"></span>
-                            </button>
-                            <div className="collapse navbar-collapse" id="navbarNavDropdown"> */}
-         {/* <ul className="navbar-nav">
-                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Vinos</a>
-                                 </li>
-                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Aperitivos</a>
-                                 </li>
-                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Champagne</a>
-                                 </li>
-                                 <li className="nav-item dropdown">
-                                    <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                       Destilados
-                                    </a>
-                                    <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                       <li><a className="dropdown-item" href="#">Whiskey</a></li>
-                                       <li><a className="dropdown-item" href="#">Gin</a></li>
-                                       <li><a className="dropdown-item" href="#">Vodka</a></li>
-                                    </ul>
-                                 </li>
-                              </ul>  */}
-         {/* <ul className="navbar-nav">
-                                 {categorias.map((cat, i) => (
-                                    <li key={i} className="nav-item">
-                                       <a className="nav-link" href="#">{cat}</a>
-                                    </li>
-                                 ))}
-                              </ul>
-                           </div>
-                        </div>
-                     </nav>
-                  </Center>
-               </Box>
-               <Spacer />
-               <Box>
-                  <Center h='100px' w='50px'>
-                     <CartWidget  />
-                  </Center>
-               </Box>
-            </Flex>
-         </Container> */}
-         <Container minW="85rem " bg="purple" color='black' >
-            <Flex alignContent="center" gap="2">
-               <Avatar  borderRadius="10px" name='Copa-NavBar' src='https://www.catadelvino.com/uploads/317201417030318552e.jpg' h='100px' w='50px' />
+         <Container minW="85rem " bg="purple" color='black'  className="header">
+            <Flex alignContent="center" gap="2" className="flex">
+               <Avatar borderRadius="10px" name='Copa-NavBar' src='https://www.catadelvino.com/uploads/317201417030318552e.jpg' h='100px' w='50px' />
                <Box>
                   <Center h='100px'>
                      <Heading size="md">
@@ -69,7 +40,7 @@ const NavBar = () => {
                   </Center>
                </Box>
                <Spacer />
-               <Box>
+               <Box  >
                   <Center h='100px'>
                      <Menu>
                         <Link to={"/catalogue"}>
@@ -102,9 +73,7 @@ const NavBar = () => {
                <Spacer />
                <Box>
                   <Center h='100px' w='50px'>
-                     <Link to={"/cart"}>
-                        <CartWidget />
-                     </Link>
+                     <CheckCarrito cantidadProductos={cart} />
                   </Center>
                </Box>
             </Flex>
