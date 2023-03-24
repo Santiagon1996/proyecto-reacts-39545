@@ -29,7 +29,7 @@ const NavBar = () => {
 
    return (
       <>
-         <Container minW="85rem " bg="purple" color='black'  className="header">
+          <Container  bg="purple" color='black'  className="header"> 
             <Flex alignContent="center" gap="2" className="flex">
                <Avatar borderRadius="10px" name='Copa-NavBar' src='https://www.catadelvino.com/uploads/317201417030318552e.jpg' h='100px' w='50px' />
                <Box>

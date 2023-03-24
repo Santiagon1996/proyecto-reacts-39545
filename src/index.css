@@ -7,7 +7,10 @@
 .card-main {
   width: 18rem;
   margin: 10px;
-  ;
+  
+}
+.header{
+  max-width: 100vw;
 }
 
 
